@@ -140,7 +140,7 @@ gives:
 ENOB = (SNR_dB - 1.76) / 6.02
 ```
 
-This relation is conventionally associated with a full-scale sinusoidal input and ideal quantization assumptions. The simulator may report the transformed value for its ramp experiment as a comparative metric, but documentation must state that it is not a standards-grade ADC dynamic-performance measurement.
+This relation is conventionally associated with a full-scale sinusoidal input and ideal quantization assumptions. The simulator reports the transformed value for nonconstant ramp references when SNR is defined. It is a comparative metric, not a standards-grade ADC dynamic-performance measurement.
 
 ## Relative effective-resolution gain
 
