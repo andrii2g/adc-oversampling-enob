@@ -1,0 +1,13 @@
+[package]
+name = "adc-oversampling-enob"
+version = "0.1.0"
+edition = "2024"
+description = "Simulate ADC oversampling, dither, quantization error, and effective resolution gain"
+license = "MIT"
+
+[dependencies]
+
+[profile.release]
+lto = true
+codegen-units = 1
+strip = true

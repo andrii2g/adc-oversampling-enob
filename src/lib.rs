@@ -1,0 +1,12 @@
+pub mod adc;
+pub mod cli;
+pub mod config;
+pub mod experiment;
+pub mod histogram;
+pub mod noise;
+pub mod oversample;
+pub mod report;
+pub mod rng;
+pub mod signal;
+pub mod stats;
+pub mod svg;
