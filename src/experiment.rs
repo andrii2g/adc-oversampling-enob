@@ -6,6 +6,29 @@ use crate::{
     stats::{self, Metrics},
 };
 pub type ExperimentError = String;
+/// Each amplitude starts a fresh generator with the same seed.
+pub fn run_sweep(
+    config: &crate::config::SweepConfig,
+) -> Result<Vec<ExperimentResult>, ExperimentError> {
+    let base = config.base.validated()?;
+    if config.amplitudes_lsb.is_empty()
+        || config
+            .amplitudes_lsb
+            .iter()
+            .any(|a| !a.is_finite() || *a < 0.0)
+    {
+        return Err("sweep amplitudes must be finite, non-negative, and nonempty".into());
+    }
+    config
+        .amplitudes_lsb
+        .iter()
+        .map(|&amplitude| {
+            let mut run_config = base.clone();
+            run_config.noise.amplitude_lsb = amplitude;
+            run(&run_config)
+        })
+        .collect()
+}
 #[derive(Debug, Clone)]
 pub struct RawDataset {
     pub reference_volts: Vec<f64>,
