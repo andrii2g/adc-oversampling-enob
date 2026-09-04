@@ -48,16 +48,25 @@ impl Default for ExperimentConfig {
 impl ExperimentConfig {
     pub fn validated(&self) -> Result<Self, String> {
         if !(2..=24).contains(&self.bits) {
-            return Err("--bits must be in 2..=24".into());
+            return Err(format!("--bits must be in 2..=24, got {}", self.bits));
         }
         if !self.v_ref.is_finite() || self.v_ref <= 0.0 {
-            return Err("--vref must be finite and positive".into());
+            return Err(format!(
+                "--vref must be finite and positive, got {}",
+                self.v_ref
+            ));
         }
         if self.sample_count == 0 {
-            return Err("--samples must be positive".into());
+            return Err(format!(
+                "--samples must be positive, got {}",
+                self.sample_count
+            ));
         }
         if !self.noise.amplitude_lsb.is_finite() || self.noise.amplitude_lsb < 0.0 {
-            return Err("--noise-lsb must be finite and non-negative".into());
+            return Err(format!(
+                "--noise-lsb must be finite and non-negative, got {}",
+                self.noise.amplitude_lsb
+            ));
         }
         let finite = match self.signal {
             SignalKind::Constant { voltage } => voltage.is_finite(),
@@ -69,7 +78,10 @@ impl ExperimentConfig {
             return Err("signal voltages and ramp span must be finite".into());
         }
         if self.histogram_bins < 2 {
-            return Err("--histogram-bins must be at least 2".into());
+            return Err(format!(
+                "--histogram-bins must be at least 2, got {}",
+                self.histogram_bins
+            ));
         }
         if self.oversampling.is_empty() {
             return Err("--osr must not be empty".into());
